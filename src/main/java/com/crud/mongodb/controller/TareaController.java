@@ -34,7 +34,7 @@ public class TareaController {
 
 
     @DeleteMapping("/delete")
-    ResponseEntity<Tarea> delete(@PathVariable(value = "id") String id) {
+    ResponseEntity<Tarea> delete(@RequestParam(value = "id") String id) {
         boolean result = tareaService.deleteTarea(id);
         if (result) {
             return new ResponseEntity<Tarea>(HttpStatus.OK);

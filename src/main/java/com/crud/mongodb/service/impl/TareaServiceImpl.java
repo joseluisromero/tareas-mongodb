@@ -6,6 +6,8 @@ import com.crud.mongodb.service.TareaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.*;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +22,26 @@ public class TareaServiceImpl implements TareaService {
     }
 
     @Override
+    public List<Tarea> findByCreated(Date initDate, Date endDate) {
+
+        initDate=convertToDateViaInstant(convertToLocalDateTimeViaInstant(initDate).withHour(0).withMinute(0).minusSeconds(0).minusNanos(0));
+        endDate=convertToDateViaInstant(convertToLocalDateTimeViaInstant(endDate).withHour(23).withMinute(59).minusSeconds(59).minusNanos(0));
+        return tareaRepository.findByCreatedBetweenhgf(initDate, endDate);
+    }
+    private  LocalDateTime convertToLocalDateTimeViaInstant(Date dateToConvert) {
+        return dateToConvert.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
+    }
+    private Date convertToDateViaInstant(LocalDateTime dateToConvert) {
+        return java.util.Date
+                .from(dateToConvert.atZone(ZoneId.systemDefault())
+                        .toInstant());
+    }
+
+    @Override
     public Tarea save(Tarea tarea) {
+        tarea.setCreated(new Date());
         return tareaRepository.save(tarea);
     }
 

@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @CrossOrigin
@@ -19,6 +20,11 @@ public class TareaController {
     @GetMapping("/")
     List<Tarea> index() {
         return tareaService.getAll();
+    }
+
+    @GetMapping(value = "/findBy")
+    List<Tarea> findByDate(@RequestParam("initDate") Date initDate, @RequestParam("endDate") Date endDate) {
+        return tareaService.findByCreated(initDate,endDate);
     }
 
     @ResponseStatus(HttpStatus.CREATED)

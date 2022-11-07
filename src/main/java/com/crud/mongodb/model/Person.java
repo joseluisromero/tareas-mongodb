@@ -3,7 +3,6 @@ package com.crud.mongodb.model;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Reference;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
@@ -11,13 +10,10 @@ import java.util.Date;
 @Data
 @Document
 @Builder
-public class Tarea {
+public class Person {
     @Id
     private String id;
     private String nombre;
-    @Builder.Default
-    private boolean completada=true;
+    private String apellido;
     private Date created;
-    private Person person;
-
 }

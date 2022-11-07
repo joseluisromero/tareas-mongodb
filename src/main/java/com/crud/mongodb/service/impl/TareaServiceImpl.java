@@ -1,6 +1,7 @@
 package com.crud.mongodb.service.impl;
 
 import com.crud.mongodb.model.Tarea;
+import com.crud.mongodb.repository.PersonRepository;
 import com.crud.mongodb.repository.TareaRepository;
 import com.crud.mongodb.service.TareaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import java.util.Optional;
 public class TareaServiceImpl implements TareaService {
     @Autowired
     private TareaRepository tareaRepository;
+    @Autowired
+    private PersonRepository personRepository;
 
     @Override
     public List<Tarea> getAll() {
@@ -42,6 +45,8 @@ public class TareaServiceImpl implements TareaService {
     @Override
     public Tarea save(Tarea tarea) {
         tarea.setCreated(new Date());
+        tarea.getPerson().setCreated(new Date());
+        tarea.setPerson(personRepository.save(tarea.getPerson()));
         return tareaRepository.save(tarea);
     }
 
